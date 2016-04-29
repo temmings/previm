@@ -55,6 +55,19 @@
     }
   }
 
+  function loadPlantUML() {
+    var umls = document.querySelectorAll('code.lang-uml');
+    Array.prototype.slice.call(umls).forEach(function(el){
+      var text = el.textContent
+      // var encoded = plantumlEncoder.encode(text)
+      // var url = 'http://www.plantuml.com/plantuml/img/' + encoded
+      var url = compress(text);
+      console.log(text)
+      console.log(url)
+      el.parentNode.outerHTML = '<div><img src="'+ url + '" /></div>'
+    });
+  }
+
   function loadPreview() {
     var needReload = false;
     // These functions are defined as the file generated dynamically.
@@ -81,6 +94,8 @@
       _doc.getElementById('preview').innerHTML = transform(getFileType(), getContent());
 
       mermaid.init();
+      loadPlantUML();
+
       Array.prototype.forEach.call(_doc.querySelectorAll('pre code'), hljs.highlightBlock);
       autoScroll('body', beforePageYOffset);
       style_header();
