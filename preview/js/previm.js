@@ -59,11 +59,9 @@
     var umls = document.querySelectorAll('code.lang-uml');
     Array.prototype.slice.call(umls).forEach(function(el){
       var text = el.textContent
-      // var encoded = plantumlEncoder.encode(text)
-      // var url = 'http://www.plantuml.com/plantuml/img/' + encoded
-      var url = compress(text);
-      console.log(text)
-      console.log(url)
+      text = unescape(encodeURIComponent(text));
+      var encoded = plantumlEncoder.encode(text)
+      var url = 'http://www.plantuml.com/plantuml/img/' + encoded
       el.parentNode.outerHTML = '<div><img src="'+ url + '" /></div>'
     });
   }
